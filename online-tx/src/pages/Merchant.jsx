@@ -12,6 +12,10 @@ const Merchant = () => {
   const [editMode, setEditMode] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
 
+  // Added toggles for Show/Hide buttons
+  const [showUsers, setShowUsers] = useState(false); 
+  const [showTransactions, setShowTransactions] = useState(false); 
+
   const headers = {
     headers: {
       Authorization: `Bearer ${user?.token}`,
@@ -170,58 +174,82 @@ const Merchant = () => {
         </div>
       </div>
 
+      {/*User List with Show/Hide */}
       <div className="mb-4">
-        <h4>Your Users</h4>
-        {users.length === 0 ? (
-          <p className="text-muted">No users found.</p>
-        ) : (
-          <ul className="list-group">
-            {users.map((u) => (
-              <li
-                key={u._id}
-                className="list-group-item d-flex justify-content-between align-items-center"
-              >
-                <div>
-                  <strong>{u.firstName} {u.lastName}</strong> ({u.email})
-                </div>
-                <div>
-                  <button
-                    className="btn btn-sm btn-warning me-2"
-                    onClick={() => handleEdit(u._id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => handleDelete(u._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <h4>Your Users</h4>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setShowUsers(!showUsers)} 
+          >
+            {showUsers ? "Hide" : "Show"} 
+          </button>
+        </div>
+
+        {showUsers && ( // <-- NEW
+          users.length === 0 ? (
+            <p className="text-muted">No users found.</p>
+          ) : (
+            <ul className="list-group">
+              {users.map((u) => (
+                <li
+                  key={u._id}
+                  className="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  <div>
+                    <strong>{u.firstName} {u.lastName}</strong> ({u.email})
+                  </div>
+                  <div>
+                    <button
+                      className="btn btn-sm btn-warning me-2"
+                      onClick={() => handleEdit(u._id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => handleDelete(u._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )
         )}
       </div>
 
-      <div>
-        <h4>User Transactions</h4>
-        {transactions && transactions.length > 0 ? (
-          <ul className="list-group">
-            {transactions.map((tx) => (
-              <li key={tx._id} className="list-group-item">
-                <strong>{tx.type}</strong> - ₹{tx.amount} -{" "}
-                {new Date(tx.createdAt).toLocaleString()} -{" "}
-                {tx.userId && typeof tx.userId === "object"
-                  ? `${tx.userId.firstName} ${tx.userId.lastName}`
-                  : "User Info Not Available"}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div className="alert alert-warning mt-3">
-            No transactions found.
-          </div>
+      {/* Transaction List with Show/Hide */}
+      <div className="mb-5">
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <h4>User Transactions</h4>
+          <button
+            className="btn btn-sm btn-outline-primary"
+            onClick={() => setShowTransactions(!showTransactions)} // <-- NEW
+          >
+            {showTransactions ? "Hide" : "Show"} {/* <-- NEW */}
+          </button>
+        </div>
+
+        {showTransactions && ( // <-- NEW
+          transactions && transactions.length > 0 ? (
+            <ul className="list-group">
+              {transactions.map((tx) => (
+                <li key={tx._id} className="list-group-item">
+                  <strong>{tx.type}</strong> - ₹{tx.amount} -{" "}
+                  {new Date(tx.createdAt).toLocaleString()} -{" "}
+                  {tx.userId && typeof tx.userId === "object"
+                    ? `${tx.userId.firstName} ${tx.userId.lastName}`
+                    : "User Info Not Available"}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="alert alert-warning mt-3">
+              No transactions found.
+            </div>
+          )
         )}
       </div>
     </div>

@@ -102,7 +102,7 @@ const User = () => {
   }
 
   return (
-    <div className="container py-4">
+    <div className="container py-4 mt-5 pt-5">
       <h2>User Dashboard</h2>
       {message && <div className="alert alert-success">{message}</div>}
 

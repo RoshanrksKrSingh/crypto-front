@@ -89,7 +89,7 @@ const Merchant = () => {
   }, [user?.token]);
 
   return (
-    <div className="container py-4">
+    <div className="container py-4 mt-5 pt-5">
       <h2 className="mb-4">Merchant Dashboard</h2>
 
       <div className="card mb-4">

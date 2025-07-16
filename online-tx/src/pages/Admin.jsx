@@ -100,8 +100,8 @@ const Admin = () => {
   };
 
   return (
-    <div className="container py-4">
-      <h2 className="text-center mb-4 text-primary">Admin Dashboard</h2>
+    <div className="container py-4 mt-5 pt-5">
+      <h2 className="text-center mb-4 ">Admin Dashboard</h2>
 
       {/* Create / Update Form */}
       <div className="card mb-4">
@@ -124,8 +124,7 @@ const Admin = () => {
             <div className="col-md-6">
               <input
                 type="text"
-                className="form-control"
-                placeholder="First Name"
+                className="form-control" placeholder="First Name"
                 value={form.firstName || ''}
                 onChange={(e) => setForm({ ...form, firstName: e.target.value })}
                 required

@@ -6,6 +6,9 @@ export default {
         changeOrigin: true,
         secure: false,
       },
+       build: {
+    outDir: "dist", 
+  },
     },
   },
 };
